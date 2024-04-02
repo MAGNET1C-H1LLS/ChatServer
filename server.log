@@ -1,0 +1,1068 @@
+INFO:websockets.server:server listening on 0.0.0.0:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on 0.0.0.0:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 45, in handle_client
+    client_id, client_username = get_auth_client(authorization_message['username'],
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 84, in get_auth_client
+    c.execute(f'SELECT * FROM Users WHERE Name=%s AND Password=%s', (name, password))
+sqlite3.OperationalError: near "%": syntax error
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 45, in handle_client
+    client_id, client_username = get_auth_client(authorization_message['username'],
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 84, in get_auth_client
+    c.execute(f'SELECT * FROM Users WHERE Name=%s AND Password=%s', (name, password))
+sqlite3.OperationalError: near "%": syntax error
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\PycharmProjects\chat-server\.venv\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 45, in handle_client
+    client_id, client_username = get_auth_client(authorization_message['username'],
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 84, in get_auth_client
+    c.execute(f'SELECT * FROM Users WHERE Name=%s AND Password=%s', (name, password))
+sqlite3.OperationalError: near "%": syntax error
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+WARNING:asyncio:socket.send() raised exception.
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<IocpProactor.accept.<locals>.accept_coro() running at C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:561> wait_for=<_OverlappedFuture cancelled>>
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 2 ID logged in
+INFO:__main__:user under 2 ID uploaded initial data
+INFO:__main__:user under 2 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 6 ID logged in
+INFO:__main__:user under 6 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 7 ID logged in
+INFO:__main__:user under 7 ID uploaded initial data
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 2 ID logged in
+INFO:__main__:user under 2 ID uploaded initial data
+INFO:__main__:user under 2 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 0.0.0.0:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 6 ID logged in
+INFO:__main__:user under 6 ID uploaded initial data
+INFO:__main__:user under 6 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 10 ID logged in
+INFO:__main__:user under 10 ID uploaded initial data
+INFO:__main__:user under 10 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 6 ID logged in
+INFO:__main__:user under 6 ID uploaded initial data
+INFO:__main__:user under 6 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 10 ID logged in
+INFO:__main__:user under 10 ID uploaded initial data
+INFO:__main__:user under 10 ID disconnected
+INFO:websockets.server:connection closed
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 461, in finish_socket_func
+    return ov.getresult()
+           ^^^^^^^^^^^^^^
+OSError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 963, in transfer_data
+    message = await self.read_message()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1033, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1108, in read_data_frame
+    frame = await self.read_frame(max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1165, in read_frame
+    frame = await Frame.read(
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\framing.py", line 68, in read
+    data = await reader(2)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 734, in readexactly
+    await self._wait_for_data('readexactly')
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 527, in _wait_for_data
+    await self._waiter
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 286, in _loop_reading
+    length = fut.result()
+             ^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 798, in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 465, in finish_socket_func
+    raise ConnectionResetError(*exc.args)
+ConnectionResetError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 80, in handle_client
+    await send_online_status(processing_online_status(client_id, False))
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 114, in send_online_status
+    await asyncio.gather(*[client.send('1' + json.dumps(session)) for client in online_clients.values()])
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 939, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 6 ID logged in
+INFO:__main__:user under 6 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 6 ID disconnected
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 461, in finish_socket_func
+    return ov.getresult()
+           ^^^^^^^^^^^^^^
+OSError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 963, in transfer_data
+    message = await self.read_message()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1033, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1108, in read_data_frame
+    frame = await self.read_frame(max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1165, in read_frame
+    frame = await Frame.read(
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\framing.py", line 68, in read
+    data = await reader(2)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 734, in readexactly
+    await self._wait_for_data('readexactly')
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 527, in _wait_for_data
+    await self._waiter
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 286, in _loop_reading
+    length = fut.result()
+             ^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 798, in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 465, in finish_socket_func
+    raise ConnectionResetError(*exc.args)
+ConnectionResetError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 80, in handle_client
+    await send_online_status(processing_online_status(client_id, False))
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 114, in send_online_status
+    await asyncio.gather(*[client.send('1' + json.dumps(session)) for client in online_clients.values()])
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 939, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 6 ID logged in
+INFO:__main__:user under 6 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 6 ID disconnected
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 461, in finish_socket_func
+    return ov.getresult()
+           ^^^^^^^^^^^^^^
+OSError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 963, in transfer_data
+    message = await self.read_message()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1033, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1108, in read_data_frame
+    frame = await self.read_frame(max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1165, in read_frame
+    frame = await Frame.read(
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\framing.py", line 68, in read
+    data = await reader(2)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 734, in readexactly
+    await self._wait_for_data('readexactly')
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 527, in _wait_for_data
+    await self._waiter
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 286, in _loop_reading
+    length = fut.result()
+             ^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 798, in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 465, in finish_socket_func
+    raise ConnectionResetError(*exc.args)
+ConnectionResetError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 80, in handle_client
+    await send_online_status(processing_online_status(client_id, False))
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 114, in send_online_status
+    await asyncio.gather(*[client.send('1' + json.dumps(session)) for client in online_clients.values()])
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 939, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 5 ID logged in
+INFO:__main__:user under 5 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 5 ID disconnected
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+ERROR:websockets.server:connection handler failed
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 461, in finish_socket_func
+    return ov.getresult()
+           ^^^^^^^^^^^^^^
+OSError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 963, in transfer_data
+    message = await self.read_message()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1033, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1108, in read_data_frame
+    frame = await self.read_frame(max_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 1165, in read_frame
+    frame = await Frame.read(
+            ^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\framing.py", line 68, in read
+    data = await reader(2)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 734, in readexactly
+    await self._wait_for_data('readexactly')
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\streams.py", line 527, in _wait_for_data
+    await self._waiter
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 286, in _loop_reading
+    length = fut.result()
+             ^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 798, in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 465, in finish_socket_func
+    raise ConnectionResetError(*exc.args)
+ConnectionResetError: [WinError 64] ”казанное сетевое им€ более недоступно
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 236, in handler
+    await self.ws_handler(self)
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\server.py", line 1175, in _ws_handler
+    return await cast(
+           ^^^^^^^^^^^
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 80, in handle_client
+    await send_online_status(processing_online_status(client_id, False))
+  File "C:\Users\serge\PycharmProjects\chat-server\chat_server.py", line 114, in send_online_status
+    await asyncio.gather(*[client.send('1' + json.dumps(session)) for client in online_clients.values()])
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\serge\AppData\Local\Programs\Python\Python312\Lib\site-packages\websockets\legacy\protocol.py", line 939, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 3 ID logged in
+INFO:__main__:user under 3 ID uploaded initial data
+INFO:__main__:user under 3 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 2 ID logged in
+INFO:__main__:user under 2 ID uploaded initial data
+INFO:__main__:user under 2 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:server listening on [::1]:8765
+INFO:websockets.server:server listening on 127.0.0.1:8765
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:__main__:user under 0 ID disconnected
+INFO:websockets.server:connection closed
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 1 ID logged in
+INFO:__main__:user under 1 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 2 ID logged in
+INFO:__main__:user under 2 ID uploaded initial data
+INFO:websockets.server:connection open
+INFO:__main__:Unidentified user connected
+INFO:__main__:user under 3 ID logged in
+INFO:__main__:user under 3 ID uploaded initial data
+INFO:__main__:user under 3 ID disconnected
+INFO:websockets.server:connection closed
+INFO:__main__:user under 2 ID disconnected
+INFO:websockets.server:connection closed
+INFO:__main__:user under 1 ID disconnected
+INFO:websockets.server:connection closed
