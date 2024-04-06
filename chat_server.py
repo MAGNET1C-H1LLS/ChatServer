@@ -39,8 +39,8 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
             if not is_authorized:
                 if 'username' in authorization_message and 'password' in authorization_message:
-                    client_id, client_username = get_auth_client(authorization_message['username'], # нужно сделать, чтобы забаненного не пускало
-                                                                 authorization_message['password'])
+                    client_id, client_username = get_auth_client(authorization_message['username'], # нужно переделать, чтобы забаненного не пускало
+                                                                 authorization_message['password']) # также добавить в бд таблицу с банном
                     if not client_id:
                         raise websockets.exceptions.ConnectionClosedError
 
@@ -56,8 +56,10 @@ async def handle_client(websocket: websockets, path: str) -> None:
                 if is_admin:
                     if 'remove' in message:
                         await delete_data(message)
+                    # нужно чтобы сессия пользователя заканчивалась как-то
                     elif 'ban' in message:
                         await ban_user(message)
+
                     elif 'statistic' in message:
                         await statistic_user(message)
 
@@ -76,10 +78,11 @@ async def handle_client(websocket: websockets, path: str) -> None:
             await send_online_status(processing_online_status(client_id, False))
 
 
-async def ban_user(message): ... # этот метод
+async def ban_user(message): ... # этот метод временного бана пользователя
+# нужно чтобы сессия пользователя заканчивалась как-то
 
 
-async def statistic_user(message): ... # этот метод
+async def statistic_user(message): ... # этот метод отправки статистики по пользователю
 
 
 async def check_is_admin(user_id: int) -> bool:
@@ -99,7 +102,8 @@ async def notify_users(message: str) -> None:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
 
-def get_auth_client(name: str, password: str) -> tuple: # нужно сделать, чтобы забаненного не пускало
+def get_auth_client(name: str, password: str) -> tuple: # нужно переделать, чтобы забаненного не пускало
+    # также добавить в бд таблицу с банном
     c.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
     res_query = c.fetchall()
 
@@ -142,7 +146,7 @@ async def send_delete_message(message: str) -> None:
         await asyncio.gather(*[client.send('3' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_message_in_BD(id_message: int) -> None: ... # этот метод
+async def delete_message_in_BD(id_message: int) -> None: ... # этот метод удаления сообщения из бд и отправки другим пользователям сообщения об удалении
 
 
 async def send_delete_user(message: str) -> None:
@@ -150,7 +154,8 @@ async def send_delete_user(message: str) -> None:
         await asyncio.gather(*[client.send('4' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_user_in_BD(id_user: int) -> None: ... # этот метод
+async def delete_user_in_BD(id_user: int) -> None: ... # этот метод удаления пользователя из бд, если время его на пожизненно банят
+# нужно чтобы сессия пользователя заканчивалась как-то
 
 
 async def save_in_bd() -> None:
