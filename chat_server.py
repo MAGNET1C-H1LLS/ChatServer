@@ -39,7 +39,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
             if not is_authorized:
                 if 'username' in authorization_message and 'password' in authorization_message:
-                    client_id, client_username = get_auth_client(authorization_message['username'],
+                    client_id, client_username = get_auth_client(authorization_message['username'], # нужно сделать, чтобы забаненного не пускало
                                                                  authorization_message['password'])
                     if not client_id:
                         raise websockets.exceptions.ConnectionClosedError
@@ -99,7 +99,7 @@ async def notify_users(message: str) -> None:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
 
-def get_auth_client(name: str, password: str) -> tuple:
+def get_auth_client(name: str, password: str) -> tuple: # нужно сделать, чтобы забаненного не пускало
     c.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
     res_query = c.fetchall()
 
