@@ -53,8 +53,14 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
                     await init_client(client_id)
             else:
-                if is_admin and 'remove' in message:
-                    await delete_data(message)
+                if is_admin:
+                    if 'remove' in message:
+                        await delete_data(message)
+                    elif 'ban' in message:
+                        await ban_user(message)
+                    elif 'statistic' in message:
+                        await statistic_user(message)
+
                 else:
                     await notify_users(processing_message(message))
 
@@ -68,6 +74,12 @@ async def handle_client(websocket: websockets, path: str) -> None:
             del online_clients[client_id]
 
             await send_online_status(processing_online_status(client_id, False))
+
+
+async def ban_user(message): ... # этот метод
+
+
+async def statistic_user(message): ... # этот метод
 
 
 async def check_is_admin(user_id: int) -> bool:
@@ -130,7 +142,7 @@ async def send_delete_message(message: str) -> None:
         await asyncio.gather(*[client.send('3' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_message_in_BD(id_message: int) -> None: ...
+async def delete_message_in_BD(id_message: int) -> None: ... # этот метод
 
 
 async def send_delete_user(message: str) -> None:
@@ -138,7 +150,7 @@ async def send_delete_user(message: str) -> None:
         await asyncio.gather(*[client.send('4' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_user_in_BD(id_user: int) -> None: ...
+async def delete_user_in_BD(id_user: int) -> None: ... # этот метод
 
 
 async def save_in_bd() -> None:
