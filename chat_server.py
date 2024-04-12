@@ -25,6 +25,8 @@ new_sessions: list = []
 loaded_messages: list = []
 new_messages: list = []
 
+last_message_id = 0
+
 
 async def handle_client(websocket: websockets, path: str) -> None:
     global all_client
@@ -35,12 +37,13 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
     try:
         async for message in websocket:
-            authorization_message = json.loads(message)
+            print(message)
+            authorizetion_message = json.loads(message)
 
             if not is_authorized:
-                if 'username' in authorization_message and 'password' in authorization_message:
-                    client_id, client_username = get_auth_client(authorization_message['username'], # нужно переделать, чтобы забаненного не пускало
-                                                                 authorization_message['password']) # также добавить в бд таблицу с банном
+                if 'username' in authorizetion_message and 'password' in authorizetion_message:
+                    client_id, client_username = get_auth_client(authorizetion_message['username'], # нужно переделать, чтобы забаненного не пускало
+                                                                 authorizetion_message['password']) # также добавить в бд таблицу с банном
                     if not client_id:
                         raise websockets.exceptions.ConnectionClosedError
 
@@ -54,25 +57,27 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     await init_client(client_id)
             else:
                 if is_admin:
-                    if 'remove' in message:
+                    if 'remove' in authorizetion_message:
                         await delete_data(message)
                     # нужно чтобы сессия пользователя заканчивалась как-то
-                    elif 'ban' in message:
+                    elif 'ban' in authorizetion_message:
                         await ban_user(message)
-
-                    elif 'statistic' in message:
+                    elif 'statistic' in authorizetion_message:
                         await statistic_user(message)
-
+                    else:
+                        await notify_users(processing_message(message))
                 else:
                     await notify_users(processing_message(message))
 
     except websockets.exceptions.ConnectionClosedError:
+        print('user exit')
         client_id = 0
         for key, value in online_clients.items():
             if value == websocket:
                 client_id = key
 
         if client_id:
+            print(online_clients)
             del online_clients[client_id]
 
             await send_online_status(processing_online_status(client_id, False))
@@ -90,6 +95,7 @@ async def check_is_admin(user_id: int) -> bool:
 
 
 async def init_client(client_id: int) -> None:
+    print('start init')
     await online_clients[client_id].send('S')
     await send_all_users(online_clients[client_id])
     await send_history_messages(online_clients[client_id], create_history_message())
@@ -98,6 +104,7 @@ async def init_client(client_id: int) -> None:
 
 
 async def notify_users(message: str) -> None:
+    pprint(message)
     if online_clients:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
@@ -225,6 +232,7 @@ def load_users_from_BD() -> None:
 def load_messages_from_BD() -> None:
     global c
     global loaded_messages
+    global last_message_id
 
     c.execute(f"SELECT * FROM Messages ORDER BY ID_message DESC LIMIT {LIMIT_HISTORY_MESSAGE};")
     for row in c.fetchall()[::-1]:
@@ -237,12 +245,19 @@ def load_messages_from_BD() -> None:
             }
         ))
 
+        if row[0] > last_message_id:
+            last_message_id = row[0]
+
 
 def processing_message(message: str) -> str:
     global new_messages
+    global last_message_id
 
     message = json.loads(message)
     message['Date'] = datetime.now().strftime("%Y.%m.%d %H:%M:%S")
+
+    last_message_id += 1
+    message['ID'] = last_message_id
 
     new_messages.append(message)
 
@@ -262,6 +277,8 @@ def processing_online_status(client_id: int, online_status: bool) -> dict:
     new_sessions.append(session)
 
     change_online_status_client(client_id, online_status)
+
+    print(session)
 
     return session
 
