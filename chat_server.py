@@ -37,13 +37,12 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
     try:
         async for message in websocket:
-            print(message)
-            authorizetion_message = json.loads(message)
+            json_message = json.loads(message)
 
             if not is_authorized:
-                if 'username' in authorizetion_message and 'password' in authorizetion_message:
-                    client_id, client_username = get_auth_client(authorizetion_message['username'], # нужно переделать, чтобы забаненного не пускало
-                                                                 authorizetion_message['password']) # также добавить в бд таблицу с банном
+                if 'username' in json_message and 'password' in json_message:
+                    client_id, client_username = get_auth_client(json_message['username'], # нужно переделать, чтобы забаненного не пускало
+                                                                 json_message['password']) # также добавить в бд таблицу с банном
                     if not client_id:
                         raise websockets.exceptions.ConnectionClosedError
 
@@ -57,12 +56,12 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     await init_client(client_id)
             else:
                 if is_admin:
-                    if 'remove' in authorizetion_message:
+                    if 'remove' in json_message:
                         await delete_data(message)
                     # нужно чтобы сессия пользователя заканчивалась как-то
-                    elif 'ban' in authorizetion_message:
+                    elif 'ban' in json_message:
                         await ban_user(message)
-                    elif 'statistic' in authorizetion_message:
+                    elif 'statistic' in json_message:
                         await statistic_user(message)
                     else:
                         await notify_users(processing_message(message))
@@ -70,7 +69,9 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     await notify_users(processing_message(message))
 
     except websockets.exceptions.ConnectionClosedError:
-        print('user exit')
+        ...
+
+    finally:
         client_id = 0
         for key, value in online_clients.items():
             if value == websocket:
@@ -95,9 +96,7 @@ async def check_is_admin(user_id: int) -> bool:
 
 
 async def init_client(client_id: int) -> None:
-    print('start init')
     await online_clients[client_id].send('S')
-    await send_all_users(online_clients[client_id])
     await send_history_messages(online_clients[client_id], create_history_message())
     await send_online_status(processing_online_status(client_id, True))
     await online_clients[client_id].send('R')
@@ -116,16 +115,18 @@ def get_auth_client(name: str, password: str) -> tuple: # нужно перед�
 
     if len(res_query):
         return int(res_query[0][0]), res_query[0][1]
-    return ()
+    return None, None
 
 
 async def send_history_messages(current_client: websockets, messages: list) -> None:
+    pprint(messages)
     if online_clients:
         await asyncio.gather(*[current_client.send('0' + f'{message}') for message in messages])
 
 
 async def send_all_users(current_client: websockets):
     if online_clients:
+        pprint([json.dumps(client) for client in all_client])
         await asyncio.gather(*[current_client.send('2' + json.dumps(client)) for client in all_client])
 
 
@@ -259,9 +260,9 @@ def processing_message(message: str) -> str:
     last_message_id += 1
     message['ID'] = last_message_id
 
-    new_messages.append(message)
-
     message = json.dumps(message)
+
+    new_messages.append(message)
 
     return message
 
