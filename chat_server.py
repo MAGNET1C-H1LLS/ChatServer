@@ -6,16 +6,14 @@ import websockets
 import psycopg2
 
 from datetime import datetime
-from time import time
-from pprint import pprint
 
 
 LIMIT_HISTORY_MESSAGE: int = 100
 SAVE_PERIOD: int = 60
 # DATABASE: str = "postgresql://test:123@localhost:5432/test"
 
-conn: sqlite3.Connection = sqlite3.connect('mydatabase.db')
-c: sqlite3.Cursor = conn.cursor()
+connection_bd: sqlite3.Connection = sqlite3.connect('mydatabase.db')
+cursor_bd: sqlite3.Cursor = connection_bd.cursor()
 
 online_clients: dict = {}
 all_client: list = []
@@ -44,7 +42,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     client_id, client_username = get_auth_client(json_message['username'], # нужно переделать, чтобы забаненного не пускало
                                                                  json_message['password']) # также добавить в бд таблицу с банном
                     if not client_id:
-                        raise websockets.exceptions.ConnectionClosedError
+                        raise websockets.exceptions.ConnectionClosedError(None, None)
 
                     is_admin = await check_is_admin(client_id)
 
@@ -78,7 +76,6 @@ async def handle_client(websocket: websockets, path: str) -> None:
                 client_id = key
 
         if client_id:
-            print(online_clients)
             del online_clients[client_id]
 
             await send_online_status(processing_online_status(client_id, False))
@@ -92,26 +89,26 @@ async def statistic_user(message): ... # этот метод отправки с
 
 
 async def check_is_admin(user_id: int) -> bool:
-    return bool(len(c.execute(f'SELECT * FROM Admins WHERE ID_user=?', (user_id, )).fetchall()))
+    return bool(len(cursor_bd.execute(f'SELECT * FROM Admins WHERE ID_user=?', (user_id,)).fetchall()))
 
 
 async def init_client(client_id: int) -> None:
     await online_clients[client_id].send('S')
+    await send_all_users(online_clients[client_id])
     await send_history_messages(online_clients[client_id], create_history_message())
     await send_online_status(processing_online_status(client_id, True))
     await online_clients[client_id].send('R')
 
 
 async def notify_users(message: str) -> None:
-    pprint(message)
     if online_clients:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
 
 def get_auth_client(name: str, password: str) -> tuple: # нужно переделать, чтобы забаненного не пускало
     # также добавить в бд таблицу с банном
-    c.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
-    res_query = c.fetchall()
+    cursor_bd.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
+    res_query = cursor_bd.fetchall()
 
     if len(res_query):
         return int(res_query[0][0]), res_query[0][1]
@@ -119,14 +116,12 @@ def get_auth_client(name: str, password: str) -> tuple: # нужно перед�
 
 
 async def send_history_messages(current_client: websockets, messages: list) -> None:
-    pprint(messages)
     if online_clients:
         await asyncio.gather(*[current_client.send('0' + f'{message}') for message in messages])
 
 
 async def send_all_users(current_client: websockets):
     if online_clients:
-        pprint([json.dumps(client) for client in all_client])
         await asyncio.gather(*[current_client.send('2' + json.dumps(client)) for client in all_client])
 
 
@@ -168,22 +163,25 @@ async def delete_user_in_BD(id_user: int) -> None: ... # этот метод у�
 
 async def save_in_bd() -> None:
     global new_messages
+    global new_sessions
 
     while True:
         await asyncio.sleep(SAVE_PERIOD)
 
         if len(new_messages):
             for message in new_messages:
-                c.execute("INSERT INTO Messages (ID_user, Date, Message) VALUES (?, ?, ?)",
-                          (message['OwnerID'], message['Date'], message['Message']))
+                message = json.loads(message)
+                cursor_bd.execute("INSERT INTO Messages (ID_user, Date, Message) VALUES (?, ?, ?)",
+                                  (message['OwnerID'], message['Date'], message['Message']))
 
         if len(new_sessions):
             for session in new_sessions:
-                c.execute("INSERT INTO Chat_sessions (ID_user, Online_status, Date) VALUES (?, ?, ?)",
-                          (session['ID'], session['OnlineStatus'], session['Date']))
-        conn.commit()
+                cursor_bd.execute("INSERT INTO Chat_sessions (ID_user, Online_status, Date) VALUES (?, ?, ?)",
+                                  (session['ID'], session['OnlineStatus'], session['Date']))
+        connection_bd.commit()
         print('Save')
         update_loaded_messages()
+        new_sessions.clear()
 
 
 def update_loaded_messages() -> None:
@@ -206,10 +204,10 @@ def create_history_message() -> list:
 
 
 def load_users_from_BD() -> None:
-    global c
+    global cursor_bd
     global all_client
 
-    c.execute(
+    cursor_bd.execute(
          '''SELECT DISTINCT Users.ID, Users.Name, Chat_sessions.Online_status
             FROM Users
             LEFT JOIN (
@@ -220,29 +218,29 @@ def load_users_from_BD() -> None:
             LEFT JOIN Chat_sessions ON Chat_sessions_max.ID_user = Chat_sessions.ID_user AND
             Chat_sessions_max.MaxDate = Chat_sessions.Date'''
         )
-    for row in c.fetchall():
+    for row in cursor_bd.fetchall():
         all_client.append((
             {
-                'ID': row[0],
-                'Name': row[1],
-                'OnlineStatus': True if row[2] == 'True' else False
+                'ID': int(row[0]),
+                'Name': str(row[1]),
+                'OnlineStatus': True if str(row[2]) == 'True' else False
             }
         ))
 
 
 def load_messages_from_BD() -> None:
-    global c
+    global cursor_bd
     global loaded_messages
     global last_message_id
 
-    c.execute(f"SELECT * FROM Messages ORDER BY ID_message DESC LIMIT {LIMIT_HISTORY_MESSAGE};")
-    for row in c.fetchall()[::-1]:
+    cursor_bd.execute(f"SELECT * FROM Messages ORDER BY ID_message DESC LIMIT {LIMIT_HISTORY_MESSAGE};")
+    for row in cursor_bd.fetchall()[::-1]:
         loaded_messages.append(json.dumps(
             {
-                'ID': row[0],
-                'OwnerID': row[1],
+                'ID': int(row[0]),
+                'OwnerID': int(row[1]),
                 'Date': str(row[2]),
-                'Message': row[3]
+                'Message': str(row[3])
             }
         ))
 
@@ -278,8 +276,6 @@ def processing_online_status(client_id: int, online_status: bool) -> dict:
     new_sessions.append(session)
 
     change_online_status_client(client_id, online_status)
-
-    print(session)
 
     return session
 
