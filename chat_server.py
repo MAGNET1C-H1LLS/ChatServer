@@ -18,7 +18,7 @@ cursor_bd: sqlite3.Cursor = connection_bd.cursor()
 online_clients: dict = {}
 all_client: list = []
 new_sessions: list = []
-# sessions_keys: list = []
+sessions_keys: list = []
 
 loaded_messages: list = []
 new_messages: list = []
@@ -41,7 +41,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
                 if 'username' in json_message and 'password' in json_message:
                     client_id, client_username = get_auth_client(json_message['username'], # нужно переделать, чтобы забаненного не пускало
                                                                  json_message['password']) # также добавить в бд таблицу с банном
-                    if not client_id:
+                    if not client_id or client_id in online_clients.keys():
                         raise websockets.exceptions.ConnectionClosedError(None, None)
 
                     is_admin = await check_is_admin(client_id)
