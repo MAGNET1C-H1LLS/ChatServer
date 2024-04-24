@@ -17,8 +17,9 @@ cursor_bd: sqlite3.Cursor = connection_bd.cursor()
 
 online_clients: dict = {}
 all_client: list = []
+
 new_sessions: list = []
-sessions_keys: list = []
+await_kick_user: list = []
 
 loaded_messages: list = []
 new_messages: list = []
@@ -39,8 +40,8 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
             if not is_authorized:
                 if 'username' in json_message and 'password' in json_message:
-                    client_id, client_username = get_auth_client(json_message['username'], # нужно переделать, чтобы забаненного не пускало
-                                                                 json_message['password']) # также добавить в бд таблицу с банном
+                    client_id, client_username = get_auth_client(json_message['username'],
+                                                                 json_message['password'])
                     if not client_id or client_id in online_clients.keys():
                         raise websockets.exceptions.ConnectionClosedError(None, None)
 
@@ -53,10 +54,12 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
                     await init_client(client_id)
             else:
+                if is_user_is_kick(websocket):
+                    raise websockets.exceptions.ConnectionClosedError(None, None)
+
                 if is_admin:
                     if 'remove' in json_message:
                         await delete_data(message)
-                    # нужно чтобы сессия пользователя заканчивалась как-то
                     elif 'ban' in json_message:
                         await ban_user(message)
                     elif 'statistic' in json_message:
@@ -81,18 +84,46 @@ async def handle_client(websocket: websockets, path: str) -> None:
             await send_online_status(processing_online_status(client_id, False))
 
 
-async def ban_user(message): ... # этот метод временного бана пользователя
-# нужно чтобы сессия пользователя заканчивалась как-то
+async def is_user_is_kick(websocket: websockets) -> bool:
+    global await_kick_user
+    global online_clients
+
+    id_this_user = 0
+
+    if len(await_kick_user):
+        for item in online_clients.items():
+            if websocket == item[1]:
+                id_this_user = item[0]
+
+    return id_this_user in await_kick_user
 
 
-async def statistic_user(message): ... # этот метод отправки статистики по пользователю
+async def ban_user(message):
+    global connection_bd
+    global cursor_bd
+
+    global await_kick_user
+
+    if not is_user_is_kick(message['idUser']):
+        cursor_bd.execute('''INSERT INTO Ban_users ("ID_user", "Start_ban_period", "End_ban_period") 
+                                   VALUES (?, ?, ?);''',
+                          (message['idUser'], message['StartPeriod'], message['EndPeriod']))
+        connection_bd.commit()
+
+        await_kick_user.append(message['idUser'])
+
+
+async def statistic_user(message): ...  # этот метод отправки статистики по пользователю
 
 
 async def check_is_admin(user_id: int) -> bool:
+    global cursor_bd
     return bool(len(cursor_bd.execute(f'SELECT * FROM Admins WHERE ID_user=?', (user_id,)).fetchall()))
 
 
 async def init_client(client_id: int) -> None:
+    global online_clients
+
     await online_clients[client_id].send('S')
     await send_all_users(online_clients[client_id])
     await send_history_messages(online_clients[client_id], create_history_message())
@@ -101,18 +132,36 @@ async def init_client(client_id: int) -> None:
 
 
 async def notify_users(message: str) -> None:
+    global online_clients
+
     if online_clients:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
 
-def get_auth_client(name: str, password: str) -> tuple: # нужно переделать, чтобы забаненного не пускало
-    # также добавить в бд таблицу с банном
+async def get_auth_client(name: str, password: str) -> tuple:
     cursor_bd.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
     res_query = cursor_bd.fetchall()
 
     if len(res_query):
-        return int(res_query[0][0]), res_query[0][1]
+        id_user = int(res_query[0][0])
+
+        if not is_user_is_ban(id_user):
+            return id_user, res_query[0][1]
     return None, None
+
+
+async def is_user_is_ban(id_user: int) -> bool:
+    global cursor_bd
+
+    cursor_bd.execute('''
+        SELECT * 
+        FROM Ban_users
+        WHERE ID_user = ? AND 
+        ? BETWEEN Start_ban_period AND End_ban_period;''',
+                      (id_user,
+                       datetime.now().strftime("%Y.%m.%d %H:%M:%S")))
+
+    return bool(len(cursor_bd.fetchall()))
 
 
 async def send_history_messages(current_client: websockets, messages: list) -> None:
@@ -135,12 +184,14 @@ async def delete_data(message: str) -> None:
         id_message = json.loads(message)['idMessage']
 
         await asyncio.gather(send_delete_message(message),
+                             delete_message_on_server(id_message),
                              delete_message_in_BD(id_message))
 
     elif 'idUser' in message:
         id_user = json.loads(message)['idUser']
 
         await asyncio.gather(send_delete_user(message),
+                             delete_user_on_server(id_user),
                              delete_user_in_BD(id_user))
 
 
@@ -149,7 +200,27 @@ async def send_delete_message(message: str) -> None:
         await asyncio.gather(*[client.send('3' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_message_in_BD(id_message: int) -> None: ... # этот метод удаления сообщения из бд и отправки другим пользователям сообщения об удалении
+async def delete_message_on_server(id_message: int) -> None:
+    global cursor_bd
+    global loaded_messages
+    global new_messages
+
+    for i in range(len(loaded_messages)):
+        if json.loads(loaded_messages[i])['ID'] == id_message:
+            del loaded_messages[i]
+
+    for i in range(len(new_messages)):
+        if json.loads(new_messages[i])['ID'] == id_message:
+            del new_messages[i]
+
+
+async def delete_message_in_BD(id_message: int) -> None:
+    global connection_bd
+    global cursor_bd
+
+    cursor_bd.execute('DELETE FROM Messages WHERE ID_message = ?', (id_message,))
+
+    connection_bd.commit()
 
 
 async def send_delete_user(message: str) -> None:
@@ -157,13 +228,33 @@ async def send_delete_user(message: str) -> None:
         await asyncio.gather(*[client.send('4' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_user_in_BD(id_user: int) -> None: ... # этот метод удаления пользователя из бд, если время его на пожизненно банят
-# нужно чтобы сессия пользователя заканчивалась как-то
+async def delete_user_on_server(id_user: int) -> None:
+    global online_clients
+    global all_client
+
+    if id_user in online_clients.keys():
+        del online_clients[id_user]
+
+    for i in range(len(all_client)):
+        if id_user == all_client[i]['ID']:
+            del all_client[i]
+
+
+async def delete_user_in_BD(id_user: int) -> None:
+    global connection_bd
+    global cursor_bd
+
+    cursor_bd.execute('DELETE FROM Users WHERE ID = ?', (id_user,))
+
+    connection_bd.commit()
 
 
 async def save_in_bd() -> None:
     global new_messages
     global new_sessions
+
+    global connection_bd
+    global cursor_bd
 
     while True:
         await asyncio.sleep(SAVE_PERIOD)
@@ -208,7 +299,7 @@ def load_users_from_BD() -> None:
     global all_client
 
     cursor_bd.execute(
-         '''SELECT DISTINCT Users.ID, Users.Name, Chat_sessions.Online_status
+        '''SELECT DISTINCT Users.ID, Users.Name, Chat_sessions.Online_status
             FROM Users
             LEFT JOIN (
             SELECT ID_user, MAX(Date) as MaxDate
@@ -217,7 +308,7 @@ def load_users_from_BD() -> None:
             ) as Chat_sessions_max ON Users.ID = Chat_sessions_max.ID_user
             LEFT JOIN Chat_sessions ON Chat_sessions_max.ID_user = Chat_sessions.ID_user AND
             Chat_sessions_max.MaxDate = Chat_sessions.Date'''
-        )
+    )
     for row in cursor_bd.fetchall():
         all_client.append((
             {
@@ -269,10 +360,10 @@ def processing_online_status(client_id: int, online_status: bool) -> dict:
     global new_sessions
 
     session = {
-            'ID': client_id,
-            'OnlineStatus': online_status,
-            'Date': datetime.now().strftime("%Y.%m.%d %H:%M:%S")
-        }
+        'ID': client_id,
+        'OnlineStatus': online_status,
+        'Date': datetime.now().strftime("%Y.%m.%d %H:%M:%S")
+    }
     new_sessions.append(session)
 
     change_online_status_client(client_id, online_status)
