@@ -45,7 +45,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     if not client_id or client_id in online_clients.keys():
                         raise websockets.exceptions.ConnectionClosedError(None, None)
 
-                    is_admin = await check_is_admin(client_id)
+                    is_admin = check_is_admin(client_id)
 
                     await websocket.send(f"{client_id} {client_username} {1 if is_admin else 0}")
 
@@ -59,20 +59,18 @@ async def handle_client(websocket: websockets, path: str) -> None:
 
                 if is_admin:
                     if 'remove' in json_message:
-                        await delete_data(message)
+                        await remove_message(message)
                     elif 'ban' in json_message:
-                        await ban_user(message)
+                        ban_user(message)
                     elif 'statistic' in json_message:
-                        await statistic_user(message)
+                        statistic_user(message)
                     else:
                         await notify_users(processing_message(message))
                 else:
                     await notify_users(processing_message(message))
 
-    except websockets.exceptions.ConnectionClosedError:
-        ...
-
     finally:
+        print('connection close')
         client_id = 0
         for key, value in online_clients.items():
             if value == websocket:
@@ -84,7 +82,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
             await send_online_status(processing_online_status(client_id, False))
 
 
-async def is_user_is_kick(websocket: websockets) -> bool:
+def is_user_is_kick(websocket: websockets) -> bool:
     global await_kick_user
     global online_clients
 
@@ -98,25 +96,29 @@ async def is_user_is_kick(websocket: websockets) -> bool:
     return id_this_user in await_kick_user
 
 
-async def ban_user(message):
+def ban_user(message):
     global connection_bd
     global cursor_bd
-
     global await_kick_user
+
+    message = json.loads(message)
+    print(message)
 
     if not is_user_is_kick(message['idUser']):
         cursor_bd.execute('''INSERT INTO Ban_users ("ID_user", "Start_ban_period", "End_ban_period") 
                                    VALUES (?, ?, ?);''',
-                          (message['idUser'], message['StartPeriod'], message['EndPeriod']))
+                          (message['idUser'],
+                           datetime.now().strftime("%Y.%m.%d %H:%M:%S"),
+                           message['endPeriod']))
         connection_bd.commit()
 
         await_kick_user.append(message['idUser'])
 
 
-async def statistic_user(message): ...  # этот метод отправки статистики по пользователю
+def statistic_user(message): ...  # этот метод отправки статистики по пользователю
 
 
-async def check_is_admin(user_id: int) -> bool:
+def check_is_admin(user_id: int) -> bool:
     global cursor_bd
     return bool(len(cursor_bd.execute(f'SELECT * FROM Admins WHERE ID_user=?', (user_id,)).fetchall()))
 
@@ -138,19 +140,20 @@ async def notify_users(message: str) -> None:
         await asyncio.gather(*[client.send('0' + f'{message}') for client in online_clients.values()])
 
 
-async def get_auth_client(name: str, password: str) -> tuple:
+def get_auth_client(name: str, password: str) -> tuple:
     cursor_bd.execute('SELECT * FROM Users WHERE Name=? AND Password=?', (name, password))
     res_query = cursor_bd.fetchall()
 
     if len(res_query):
         id_user = int(res_query[0][0])
 
+        print(is_user_is_ban(id_user))
         if not is_user_is_ban(id_user):
             return id_user, res_query[0][1]
     return None, None
 
 
-async def is_user_is_ban(id_user: int) -> bool:
+def is_user_is_ban(id_user: int) -> bool:
     global cursor_bd
 
     cursor_bd.execute('''
@@ -179,20 +182,12 @@ async def send_online_status(session: dict) -> None:
         await asyncio.gather(*[client.send('1' + json.dumps(session)) for client in online_clients.values()])
 
 
-async def delete_data(message: str) -> None:
-    if 'idMessage' in message:
-        id_message = json.loads(message)['idMessage']
+async def remove_message(message: str) -> None:
+    id_message = json.loads(message)['idMessage']
 
-        await asyncio.gather(send_delete_message(message),
-                             delete_message_on_server(id_message),
-                             delete_message_in_BD(id_message))
-
-    elif 'idUser' in message:
-        id_user = json.loads(message)['idUser']
-
-        await asyncio.gather(send_delete_user(message),
-                             delete_user_on_server(id_user),
-                             delete_user_in_BD(id_user))
+    await send_delete_message(message)
+    delete_message_on_server(id_message)
+    delete_message_in_BD(id_message)
 
 
 async def send_delete_message(message: str) -> None:
@@ -200,7 +195,7 @@ async def send_delete_message(message: str) -> None:
         await asyncio.gather(*[client.send('3' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_message_on_server(id_message: int) -> None:
+def delete_message_on_server(id_message: int) -> None:
     global cursor_bd
     global loaded_messages
     global new_messages
@@ -214,7 +209,7 @@ async def delete_message_on_server(id_message: int) -> None:
             del new_messages[i]
 
 
-async def delete_message_in_BD(id_message: int) -> None:
+def delete_message_in_BD(id_message: int) -> None:
     global connection_bd
     global cursor_bd
 
@@ -228,7 +223,7 @@ async def send_delete_user(message: str) -> None:
         await asyncio.gather(*[client.send('4' + f'{message}') for client in online_clients.values()])
 
 
-async def delete_user_on_server(id_user: int) -> None:
+def delete_user_on_server(id_user: int) -> None:
     global online_clients
     global all_client
 
@@ -240,7 +235,7 @@ async def delete_user_on_server(id_user: int) -> None:
             del all_client[i]
 
 
-async def delete_user_in_BD(id_user: int) -> None:
+def delete_user_in_BD(id_user: int) -> None:
     global connection_bd
     global cursor_bd
 
