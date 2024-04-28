@@ -115,8 +115,31 @@ def ban_user(message):
         await_kick_user.append(message['idUser'])
 
 
-def statistic_user(message): ...  # этот метод отправки статистики по пользователю
-
+def statistic_user(message):  # этот метод отправки статистики по пользователю
+    global connection_bd
+    global cursor_bd
+    global await_kick_user
+    cursor_bd.execute('''WITH OnlinePeriods AS (
+    SELECT 
+        ID_user,
+        Date AS OnlineStart,
+        LEAD(Date) OVER (PARTITION BY ID_user ORDER BY Date) AS OnlineEnd
+    FROM 
+        Chat_sessions
+    WHERE 
+        ID_user = ?
+        AND Online_status = 1
+    )
+    
+    SELECT 
+        ID_user,
+        OnlineStart,
+        OnlineEnd
+    FROM 
+        OnlinePeriods
+    WHERE 
+        OnlineEnd IS NOT NULL;
+    ''',
 
 def check_is_admin(user_id: int) -> bool:
     global cursor_bd
