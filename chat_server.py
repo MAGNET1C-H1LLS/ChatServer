@@ -6,6 +6,7 @@ import websockets
 import psycopg2
 
 from datetime import datetime
+from pprint import pprint
 
 
 LIMIT_HISTORY_MESSAGE: int = 100
@@ -63,7 +64,7 @@ async def handle_client(websocket: websockets, path: str) -> None:
                     elif 'ban' in json_message:
                         ban_user(message)
                     elif 'statistic' in json_message:
-                        statistic_user(message)
+                        await statistic_user(message, websocket)
                     else:
                         await notify_users(processing_message(message))
                 else:
@@ -115,31 +116,54 @@ def ban_user(message):
         await_kick_user.append(message['idUser'])
 
 
-def statistic_user(message):  # этот метод отправки статистики по пользователю
+async def statistic_user(message, websocket):  # этот метод отправки статистики по пользователю
     global connection_bd
     global cursor_bd
     global await_kick_user
-    cursor_bd.execute('''WITH OnlinePeriods AS (
-    SELECT 
-        ID_user,
-        Date AS OnlineStart,
-        LEAD(Date) OVER (PARTITION BY ID_user ORDER BY Date) AS OnlineEnd
-    FROM 
-        Chat_sessions
-    WHERE 
-        ID_user = ?
-        AND Online_status = 1
+
+    message = json.loads(message)
+
+    cursor_bd.execute(
+        '''WITH OnlinePeriods AS (
+        SELECT 
+            Date AS OnlineEnd,
+            LAG(Date) OVER (ORDER BY Date DESC) AS OnlineStart
+        FROM 
+            Chat_sessions
+        WHERE 
+            ID_user = ? -- Замените на ID_user, для которого вы хотите получить периоды онлайна
+            AND Online_status = 1
+        ORDER BY Date DESC
+        LIMIT 10
     )
     
     SELECT 
-        ID_user,
         OnlineStart,
         OnlineEnd
     FROM 
         OnlinePeriods
     WHERE 
-        OnlineEnd IS NOT NULL;
-    ''',
+        OnlineStart IS NOT NULL;
+    ''', (message['idUser'], ))
+
+    online_period = []
+
+    for item in cursor_bd.fetchall():
+        online_period.append({
+            'start': item[0],
+            'end': item[1]
+        })
+
+    cursor_bd.execute('''SELECT ID_user, COUNT( * ) as message_count
+    FROM Messages
+    WHERE ID_user = ?
+    GROUP BY ID_user;
+    ''', (message['idUser'], ))
+    count_message = int(cursor_bd.fetchall()[0][1])
+
+    await websocket.send('T' + str(count_message) + json.dumps(online_period))
+
+
 
 def check_is_admin(user_id: int) -> bool:
     global cursor_bd
