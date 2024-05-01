@@ -6,7 +6,6 @@ import websockets
 import psycopg2
 
 from datetime import datetime
-from pprint import pprint
 
 
 LIMIT_HISTORY_MESSAGE: int = 100
@@ -69,7 +68,8 @@ async def handle_client(websocket: websockets, path: str) -> None:
                         await notify_users(processing_message(message))
                 else:
                     await notify_users(processing_message(message))
-
+    except:
+        ...
     finally:
         print('connection close')
         client_id = 0
@@ -116,10 +116,8 @@ def ban_user(message):
         await_kick_user.append(message['idUser'])
 
 
-async def statistic_user(message, websocket):  # этот метод отправки статистики по пользователю
-    global connection_bd
+async def statistic_user(message, websocket):
     global cursor_bd
-    global await_kick_user
 
     message = json.loads(message)
 
@@ -131,7 +129,7 @@ async def statistic_user(message, websocket):  # этот метод отпра�
         FROM 
             Chat_sessions
         WHERE 
-            ID_user = ? -- Замените на ID_user, для которого вы хотите получить периоды онлайна
+            ID_user = ?
             AND Online_status = 1
         ORDER BY Date DESC
         LIMIT 10
@@ -146,23 +144,21 @@ async def statistic_user(message, websocket):  # этот метод отпра�
         OnlineStart IS NOT NULL;
     ''', (message['idUser'], ))
 
-    online_period = []
+    online_period = [{
+        'start': row[0],
+        'end': row[1]
+    } for row in cursor_bd.fetchall()]
 
-    for item in cursor_bd.fetchall():
-        online_period.append({
-            'start': item[0],
-            'end': item[1]
-        })
+    cursor_bd.execute(
+        '''SELECT ID_user, COUNT( * ) as message_count
+        FROM Messages
+        WHERE ID_user = ?
+        GROUP BY ID_user;''',
+        (message['idUser'], ))
 
-    cursor_bd.execute('''SELECT ID_user, COUNT( * ) as message_count
-    FROM Messages
-    WHERE ID_user = ?
-    GROUP BY ID_user;
-    ''', (message['idUser'], ))
     count_message = int(cursor_bd.fetchall()[0][1])
 
     await websocket.send('T' + str(count_message) + json.dumps(online_period))
-
 
 
 def check_is_admin(user_id: int) -> bool:
@@ -203,8 +199,8 @@ def get_auth_client(name: str, password: str) -> tuple:
 def is_user_is_ban(id_user: int) -> bool:
     global cursor_bd
 
-    cursor_bd.execute('''
-        SELECT * 
+    cursor_bd.execute(
+        '''SELECT * 
         FROM Ban_users
         WHERE ID_user = ? AND 
         ? BETWEEN Start_ban_period AND End_ban_period;''',
@@ -425,7 +421,7 @@ def main() -> None:
     load_users_from_BD()
     load_messages_from_BD()
 
-    start_server = websockets.serve(handle_client, "localhost", 8765)
+    start_server = websockets.serve(handle_client, "localhost", 8765, ping_interval=0.1)
 
     asyncio.get_event_loop().run_until_complete(asyncio.gather(start_server, save_in_bd()))
     asyncio.get_event_loop().run_forever()
